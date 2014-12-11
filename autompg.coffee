@@ -5,7 +5,8 @@ brain = require 'brain'
 fs = require 'fs'
 
 trainNetwork = (trainNetworkCb) ->
-  net = new brain.NeuralNetwork()
+  net = new brain.NeuralNetwork
+    hiddenLayers: [8, 8]
 
   fs.readFile './data/autodata.csv', (err, fileData) ->
     return trainNetworkCb err if err
@@ -18,18 +19,19 @@ trainNetwork = (trainNetworkCb) ->
     trainingData = _.map trainingData, (dataPoint) ->
       normalizedData = normalizeData dataPoint
       obj =
-        output: normalizedData.continuous
         input: normalizedData
+        output:
+          continuous: normalizedData.continuous
 
       delete obj.input.continuous
 
       obj
 
-    console.log trainingData
-
     net.train trainingData,
       log: true
-    # trainNetworkCb null, net
+      logPeriod: 100
+      errorThresh: 0.0005
+    trainNetworkCb null, net
 
 trainNetwork (err, net) ->
   throw err if err
@@ -41,11 +43,14 @@ trainNetwork (err, net) ->
     lines = fileString.split '\n'
 
     testData = lines.splice lines.length / 2
+    testData = _.filter testData, (point) ->
+      point isnt ''
 
     testData = _.map testData, (dataPoint) ->
       normalizedData = normalizeData dataPoint
       obj =
-        output: normalizedData.continuous
+        output:
+          continuous: normalizedData.continuous
         input: normalizedData
 
       delete obj.input.continuous
