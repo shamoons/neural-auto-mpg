@@ -14,7 +14,7 @@ trainNetwork = (trainNetworkCb) ->
     fileString = fileData.toString()
     lines = fileString.split '\n'
 
-    trainingData = lines.splice 0, lines.length / 2
+    trainingData = lines.splice 0, lines.length * 2 / 3
 
     trainingData = _.map trainingData, (dataPoint) ->
       normalizedData = normalizeData dataPoint
@@ -42,7 +42,7 @@ trainNetwork (err, net) ->
     fileString = fileData.toString()
     lines = fileString.split '\n'
 
-    testData = lines.splice lines.length / 2
+    testData = lines.splice lines.length * 2 / 3
     testData = _.filter testData, (point) ->
       point isnt ''
 

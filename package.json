@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/shamoons/neural-auto-mpg",
   "dependencies": {
+    "bluebird": "^2.9.13",
     "brain": "^0.7.0",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "synaptic": "^0.1.6"
   }
 }
