@@ -30,7 +30,8 @@ trainNetwork = (trainNetworkCb) ->
     net.train trainingData,
       log: true
       logPeriod: 100
-      errorThresh: 0.0005
+      errorThresh: 0.00005
+      iterations: 100000
     trainNetworkCb null, net
 
 trainNetwork (err, net) ->
